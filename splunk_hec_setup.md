@@ -2,7 +2,7 @@
 
 ## Part A — On Windows Splunk: enable HEC & create a token
 
-1. Open Splunk Web on Windows: `http://<WINDOWS_IP>:8000` and log in as admin.
+1. Open Splunk Web on Windows log in as admin.
 
 2. Enable HEC:
    - Go to **Settings → Data inputs → HTTP Event Collector**.
@@ -12,21 +12,33 @@
    - Click **New Token**.
    - Name: `cowrie_hec`
    - Source type: (choose `cowrie` or `json`), Index: create or select `cowrie`.
-   - Click **Save** and copy the Token value (long string) to use on Kali.
+   - Click **Save** and copy the Token value (long string) to use on your Linux VM.
 
 4. Configure Windows Firewall:
-   - Allow inbound TCP port `8088` for the Splunk server host so Kali can reach it.
-   - Optionally restrict source IPs to your Kali VM IP.
+   - Click win+R, type:control
+   - Go to **Windows Defender Firewall**
+   - Click **Advanced settings** on the left panel.This opens Windows Defender Firewall with Advanced Security.
+   - In the left pane, click **Inbound Rules**.
+   - In the right pane, click **New Rule…**
+   - Choose **Port → Next.**
+   - Select TCP and enter 8088 in **“Specific local ports” → Next.**
+   - Select **Allow the connection → Next.**
+   - Choose Domain, Private, Public (all checked unless you want to restrict) → Next.
+   - Give the rule a name, e.g., **Splunk HEC → Finish.**
+   - This Allow inbound TCP port `8088` for the Splunk server host so Kali can reach it and optionally restricts source IPs to your Linux VM IP.
 
-5. Confirm Splunk is listening (on Windows cmd/powershell):
+6. Confirm Splunk is listening (on Windows cmd/powershell):
    ```
    netstat -an | findstr 8088
    ```
    — it should show `LISTENING`.
 
-## Part B — On Kali: allow cowrie outbound to Windows Splunk
+## Part B — On your Linux VM: allow cowrie outbound to Windows Splunk
 
-If you previously blocked all outbound traffic for the cowrie user, allow only the Splunk IP:
+Note: 
+   - If your VM is on the same host or device, ensure your windows ip is not the localhost one.
+   - To get your windows ip, open command prompt and type ipconfig, this will provide you your windows ip configuration
+   - Choose the ethernet adapter ethernet 3 IP (Worked for me)
 
 ```bash
 # run as root or sudo
@@ -43,11 +55,10 @@ sudo iptables -C OUTPUT -m owner --uid-owner $COWRIE_UID -j DROP 2>/dev/null || 
 sudo netfilter-persistent save
 ```
 
-> If you didn’t block outbound earlier, ignore this step.
 
-## Part C — Quick test with curl (one-off)
+## Part C — Quick test with curl 
 
-Before wiring the forwarder, test HEC works from Kali:
+Before wiring the forwarder, test HEC works from your VM:
 
 ```bash
 WINDOWS_IP=<WINDOWS_IP>
@@ -67,10 +78,9 @@ If successful, you should see:
 ```
 and the event will appear in Splunk search: `index=cowrie sourcetype=cowrie "hello from cowrie test"`.
 
-## Part D — Lightweight Python forwarder (recommended)
+## Part D — Create a Lightweight Python forwarder 
 
-Save the following as `/home/cowrie/cowrie_hec_forwarder.py` (owner: cowrie) and run inside the cowrie venv. It tails `cowrie.json` and posts each JSON event to HEC.
-
+Create this file in your Linux VM's Desktop, save it as a py file
 ```python
 #!/usr/bin/env python3
 """
@@ -88,7 +98,7 @@ HEC_TOKEN = "<YOUR_HEC_TOKEN>"
 COWRIE_JSON = "/home/cowrie/cowrie/var/log/cowrie/cowrie.json"
 SOURCETYPE = "cowrie"
 INDEX = "cowrie"
-BATCH_SIZE = 50
+BATCH_SIZE = 1         #Batch size is one because I conducted a small attack of only 4-5 events, if batch size is large, it will take time to load the events in splunk or they will not appear too, so either conduct 50-60 events or decrease batch size
 SLEEP_ON_EMPTY = 1.0  # seconds
 
 # setup logging
@@ -153,14 +163,20 @@ if __name__ == "__main__":
         sys.exit(0)
 ```
 
-### Usage (on Kali, as cowrie user)
+### Saving and Running the file
+
+   - Start the normal terminal
 
 ```bash
-# put file in /home/cowrie/, set owner and permissions
-chown cowrie:cowrie /home/cowrie/cowrie_hec_forwarder.py
-chmod 750 /home/cowrie/cowrie_hec_forwarder.py
+cd /Desktop
+ls         #If the file is created it will appear in the output
+sudo mv ~/Desktop/cowrie_hec_forwarder.py /home/cowrie/cowrie/     #move it to the cowrie venv 
+sudo chown cowrie2:cowrie2 /home/cowrie2/cowrie/cowrie_hec_forwarder.py     #Fix ownership
+```
 
-# run inside cowrie venv
+
+   - Run inside cowrie venv
+```bash
 su - cowrie
 cd /home/cowrie/cowrie
 source cowrie-env/bin/activate
@@ -172,5 +188,4 @@ Check Splunk for incoming events:
 index=cowrie sourcetype=cowrie | head 20
 ```
 
-> If you want the forwarder to keep running across reboots, create a systemd service.
 
