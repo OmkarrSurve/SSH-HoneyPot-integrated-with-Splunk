@@ -185,8 +185,12 @@ cd /home/cowrie/cowrie
 source cowrie-env/bin/activate
 python3 /home/cowrie/cowrie_hec_forwarder.py &   # run in background for quick test
 ```
+   - To stop the pyhton forwarder
+```bash
+pkill -f cowrie_hec_forwarder.py
+```
 
-Check Splunk for incoming events:
+   - Check Splunk for incoming events:
 ```spl
 index=cowrie sourcetype=cowrie | head 20
 ```
