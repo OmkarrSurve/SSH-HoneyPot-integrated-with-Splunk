@@ -14,6 +14,7 @@ $ sudo apt-get install git python3-pip python3-venv libssl-dev libffi-dev build-
 ## 2) Create a user account
 ```bash
 $ sudo adduser --disabled-password cowrie
+#Output Section
 Adding user 'cowrie' ...
 Adding new group 'cowrie' (1002) ...
 Adding new user 'cowrie' (1002) with group 'cowrie' ...
@@ -25,6 +26,7 @@ Work Phone []:
 Home Phone []:
 Other []:
 Is the information correct? [Y/n]
+#Output Section
 
 $ sudo su - cowrie
 ```
@@ -86,6 +88,7 @@ $ sudo iptables -t nat -A PREROUTING -p tcp --dport 23 -j REDIRECT --to-port 222
 $ source cowrie-env/bin/activate
 (cowrie-env) $ cowrie start
 ```
+
 
 
 
