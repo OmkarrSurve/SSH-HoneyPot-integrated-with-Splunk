@@ -89,6 +89,11 @@ $ source cowrie-env/bin/activate
 (cowrie-env) $ cowrie start
 ```
 
+## 8) To Stop Cowrie
+```bash
+$ cowrie stop
+```
+
 
 
 
