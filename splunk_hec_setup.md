@@ -1,6 +1,6 @@
 # Splunk HEC Setup for Cowrie Honeypot
 
-##Splunk HTTP Event Collector (HEC) provides a lightweight, secure, and real-time method to send Cowrie honeypot logs from Linux VM to Splunk on Windows. Instead of installing a full Splunk Universal Forwarder or moving raw log files, the Python forwarder streams each JSON event directly over HTTPS using a token for authentication, ensuring cross-platform compatibility, reduced overhead, and instant visibility of SSH attack activity in Splunk for analysis and dashboards.
+Splunk HTTP Event Collector (HEC) provides a lightweight, secure, and real-time method to send Cowrie honeypot logs from Linux VM to Splunk on Windows. Instead of installing a full Splunk Universal Forwarder or moving raw log files, the Python forwarder streams each JSON event directly over HTTPS using a token for authentication, ensuring cross-platform compatibility, reduced overhead, and instant visibility of SSH attack activity in Splunk for analysis and dashboards.
 
 ## Part A — On Windows Splunk: enable HEC & create a token
 
