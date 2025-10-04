@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+*.log
+
+# Virtual environments
+venv/
+env/
+*.env
+cowrie-env/
+
+# Logs (Cowrie + Splunk Forwarder)
+*.log
+*.log.*
+*.out
+*.err
+*.pid
+var/log/
+*.json
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Secrets (tokens, keys)
+*.token
+*.key
+*.crt
+*.pem
+
+# Backup files
+*~
+*.bak
+*.tmp
+
+# OS specific
+desktop.ini
+
+# Local Splunk config or cache
+splunk/
+splunk-*/*
+etc/
+var/
