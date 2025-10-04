@@ -1,4 +1,4 @@
-# Cowrie Setup (Kali) — user: cowrie2
+# Cowrie Setup (Kali) 
 
 
 Follow these steps on your Kali VM. Replace `cowrie2` with your chosen unprivileged username if different.
@@ -9,6 +9,7 @@ Follow these steps on your Kali VM. Replace `cowrie2` with your chosen unprivile
 $ sudo apt-get install git python3-pip python3-venv libssl-dev libffi-dev build-essential libpython3-dev python3-minimal authbind
 
 ```
+
 
 ## 2) Create a user account
 ```bash
@@ -28,11 +29,13 @@ Is the information correct? [Y/n]
 $ sudo su - cowrie
 ```
 
+
 ## 3) Checkout the Code
 ```bash
 $ git clone http://github.com/cowrie/cowrie
 $ cd cowrie
 ```
+
 
 ## 4) Setup Virtual Environment 
 
@@ -77,11 +80,13 @@ $ sudo iptables -t nat -A PREROUTING -p tcp --dport 23 -j REDIRECT --to-port 222
 ```
 
 
+
 ## 7) Starting Cowrie
 ```bash
 $ source cowrie-env/bin/activate
 (cowrie-env) $ cowrie start
 ```
+
 
 
 
