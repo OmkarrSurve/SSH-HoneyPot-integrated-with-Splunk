@@ -1,8 +1,8 @@
 # Cowrie Setup (Kali) 
 
 
-Follow these steps on your Kali VM. Replace `cowrie2` with your chosen unprivileged username if different.
-
+Follow these steps on your Linux VM. 
+Note: **$ signs are not part of the commands**
 
 ## 1) Install prerequisites (run as sudo-enabled user/root)
 ```bash
@@ -86,6 +86,7 @@ $ sudo iptables -t nat -A PREROUTING -p tcp --dport 23 -j REDIRECT --to-port 222
 $ source cowrie-env/bin/activate
 (cowrie-env) $ cowrie start
 ```
+
 
 
 
