@@ -1,5 +1,8 @@
-# Cowrie Setup (Kali) 
+# Cowrie
+Cowrie is a medium-interaction SSH and Telnet honeypot designed to emulate a real server environment and log all attacker activity. It records login attempts, keystrokes, and commands executed by an attacker, while also capturing files downloaded via wget or scp. By simulating a vulnerable SSH service, Cowrie helps security researchers and administrators collect threat intelligence, analyze attack techniques, and monitor brute-force attempts in a controlled environment without exposing the actual system
 
+
+# Cowrie Setup  
 
 - Follow these steps on your Linux VM.
 - Note: **$ signs are not part of the commands**
@@ -93,6 +96,7 @@ $ source cowrie-env/bin/activate
 ```bash
 (cowrie-env) $ cowrie stop
 ```
+
 
 
 
