@@ -91,8 +91,9 @@ $ source cowrie-env/bin/activate
 
 ## 8) To Stop Cowrie
 ```bash
-$ cowrie stop
+(cowrie-env) $ cowrie stop
 ```
+
 
 
 
