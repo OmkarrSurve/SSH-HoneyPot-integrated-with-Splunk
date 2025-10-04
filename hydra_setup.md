@@ -30,3 +30,9 @@ EOF
 hydra -L /tmp/hydra-users.txt -P /tmp/hydra-pass.txt -s 2222 -t 2 -w 3 -f -V ssh://127.0.0.1
 
 ```
+
+ - To stop Hydra
+```bash
+pkill hydra
+```
+
