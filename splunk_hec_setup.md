@@ -98,9 +98,10 @@ HEC_TOKEN = "<YOUR_HEC_TOKEN>"
 COWRIE_JSON = "/home/cowrie/cowrie/var/log/cowrie/cowrie.json"
 SOURCETYPE = "cowrie"
 INDEX = "cowrie"
-BATCH_SIZE = 1         #Batch size is one because I conducted a small attack of only 4-5 events, if batch size is large, it will take time to load the events in splunk or they will not appear too, so either conduct 50-60 events or decrease batch size
-SLEEP_ON_EMPTY = 1.0  # seconds
-
+BATCH_SIZE = 1         #Batch size is one because I conducted a small attack of only 4-5 events,
+                       #if batch size is large, it will take time to load the events in splunk or they will not appear too, 
+                       #so either conduct 50-60 events or decrease batch size          
+SLEEP_ON_EMPTY = 1.0  # seconds   
 # setup logging
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 
